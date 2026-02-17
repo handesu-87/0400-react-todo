@@ -1,0 +1,102 @@
+@charset "utf-8"
+
+.list
+    max-width: 986px
+    margin: 0 auto
+    padding: 32px
+
+    &__setting
+        padding: 16px
+        margin-bottom: 32px
+        display: flex
+        justify-content: flex-end
+
+    &__header
+        display: flex
+        align-items: center
+        border-bottom: 1px solid #f0f0f0
+        font-size: 12px
+
+        &-item
+            flex: 1
+            padding: 8px 16px
+            border-right: 1px solid #f0f0f0
+            font-size: 12px
+
+            &--name
+                flex: 4
+
+    &__item
+        display: flex
+        align-items: center
+        width: 100%
+        border-bottom: 1px solid #f0f0f0
+        transition: opacity .8s
+
+        &--completed-dismissing
+            opacity: 0
+
+        &-col
+            box-sizing: border-box
+            flex: 1
+            padding: 16px
+            border-right: 1px solid #f0f0f0
+
+            &--checkbox
+                display: flex
+                justify-content: center
+
+            &--name
+                cursor: pointer
+                flex: 4
+
+                &-edit
+                    width: 100%
+                    padding-top: 3.25px
+                    padding-bottom: 3.25px
+                    cursor: default
+                    flex: 4
+                    font-size: 1rem
+
+            &--deadline
+                cursor: pointer
+
+                &-edit
+                    color: #666
+                    width: 100%
+                    padding: 3.25px 0 3,25px 0
+                    font-size: 0.875rem
+
+            &--actions
+                font-size: 12px
+                display: flex
+                justify-content: center
+
+.checkbox
+    display: block
+    border-radius: 50%
+    border: 1px solid #c6c6c6
+    padding: 4px
+    height: 26px
+    width: 26px
+    cursor: pointer
+    color: #fefefe
+    display: flex
+    justify-content: center
+    align-items: center
+
+    &--checked
+        background: #7a72ff
+
+    &__input
+        border: 0
+        -webkit-appearance: none
+        appearance: none
+        position: absolute
+
+.icon
+    color: #666
+    cursor: pointer
+
+    &--check
+        color: #fefefe

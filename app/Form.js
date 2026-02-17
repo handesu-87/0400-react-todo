@@ -1,7 +1,32 @@
+import React from "react";
 import styles from "./Form.module.sass";
-export default function Form() {
+
+export default function Form(props) {
+  const [taskName, setTaskName] = React.useState("");
+  const [taskDeadline, setTaskDeadline] = React.useState("");
+  const inputRef = React.useRef(null);
+  // console.log(inputRef);
+
+  const handleTextInput = (e) => {
+    setTaskName(e.currentTarget.value);
+  };
+  const handleDeadlineInput = (e) => {
+    setTaskDeadline(e.currentTarget.value);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    props.onSubmit(taskName, taskDeadline);
+    setTaskName("");
+    setTaskDeadline("");
+    inputRef.current.focus();
+  };
+
   return (
-    <form className={`${styles.form} ${styles["js-form"]}`}>
+    <form
+      className={`${styles.form} ${styles["js-form"]}`}
+      onSubmit={handleSubmit}
+    >
       <div className={styles["form__input-group"]}>
         <div
           className={`${styles["form__input"]} ${styles["form__input--name"]}`}
@@ -12,6 +37,9 @@ export default function Form() {
             type="text"
             className={styles["form__input-field"]}
             placeholder="タスク名を入力"
+            value={taskName}
+            onChange={handleTextInput}
+            ref={inputRef}
           />
         </div>
         <div className={styles["form__input"]}>
@@ -21,6 +49,7 @@ export default function Form() {
             type="date"
             className={styles["form__input-field"]}
             placeholder="期限日を入力"
+            onChange={handleDeadlineInput}
           />
         </div>
       </div>
