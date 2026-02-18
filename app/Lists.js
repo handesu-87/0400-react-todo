@@ -71,7 +71,12 @@ const List = (props) => {
 export default function Lists({ taskItems, setTaskItems }) {
   const [showCompleted, setShowCompleted] = React.useState(false);
 
+  const handleShowCompleted = (e) => {
+    setShowCompleted(e.target.checked);
+  };
+
   const handleCheckbox = (id) => {
+    // ① フェード開始（isDeletingだけtrueにする）
     const newTasks = taskItems.map((task) => {
       return {
         id: task.id,
@@ -84,12 +89,20 @@ export default function Lists({ taskItems, setTaskItems }) {
 
     setTaskItems(newTasks);
 
+    // ② 0.8秒後に completed をトグルしてfilter()を実行
     setTimeout(() => {
-      const filteredTasks = newTasks.filter((task) => {
-        return task.id !== id;
+      const updatedTasks = newTasks.map((task) => {
+        return {
+          id: task.id,
+          name: task.name,
+          deadline: task.deadline,
+          isCompleted: task.isCompleted,
+          isDeleting: false, //リセット
+        };
       });
-      setTaskItems(filteredTasks);
-    }, 300);
+
+      setTaskItems(updatedTasks);
+    }, 800);
   };
 
   const handleDeleteAction = (id) => {
@@ -103,17 +116,22 @@ export default function Lists({ taskItems, setTaskItems }) {
     setTaskItems(newTasks);
   };
 
-  const tasks = taskItems.map((task) => {
-    console.log(task.id);
-    return (
+  const tasks = taskItems
+    .filter((task) => {
+      if (showCompleted) return true;
+
+      if (task.isDeleting) return true;
+
+      return !task.isCompleted;
+    })
+    .map((task) => (
       <List
         key={task.id}
         task={task}
         onChecked={handleCheckbox}
         onDelete={handleDeleteAction}
       />
-    );
-  });
+    ));
 
   return (
     <div className={styles["list"]}>
@@ -123,6 +141,8 @@ export default function Lists({ taskItems, setTaskItems }) {
             name="show-completed"
             type="checkbox"
             className={`${styles["list__setting-input"]} ${styles["js-show-completed"]}`}
+            checked={showCompleted}
+            onChange={handleShowCompleted}
           />
           完了タスクを表示
         </label>

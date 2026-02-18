@@ -1,3 +1,3 @@
-:HL["https://handesu-87.github.io/0400-react-todo/_next/static/chunks/a02076c4605dc53f.css","style"]
-:HL["https://handesu-87.github.io/0400-react-todo/_next/static/chunks/033e0b877ccd7c5b.css","style"]
-0:{"buildId":"ury2YSfE4GLBAsUoS7Fii","tree":{"name":"","paramType":null,"paramKey":"","hasRuntimePrefetch":false,"slots":{"children":{"name":"__PAGE__","paramType":null,"paramKey":"__PAGE__","hasRuntimePrefetch":false,"slots":null,"isRootLayout":false}},"isRootLayout":true},"staleTime":300}
+:HL["https://handesu-87.github.io/0400-react-todo/_next/static/chunks/6d5306bffbbfaff5.css","style"]
+:HL["https://handesu-87.github.io/0400-react-todo/_next/static/chunks/e45d06972e32dfe2.css","style"]
+0:{"buildId":"Mj1yos5nSGt90_UyfwLCx","tree":{"name":"","paramType":null,"paramKey":"","hasRuntimePrefetch":false,"slots":{"children":{"name":"__PAGE__","paramType":null,"paramKey":"__PAGE__","hasRuntimePrefetch":false,"slots":null,"isRootLayout":false}},"isRootLayout":true},"staleTime":300}
