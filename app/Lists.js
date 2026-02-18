@@ -16,7 +16,11 @@ const List = (props) => {
   };
 
   return (
-    <li className={styles["list__item"]}>
+    <li
+      className={`${styles["list__item"]} ${
+        props.task.isDeleting ? styles["list__item--completed-dismissing"] : ""
+      }`}
+    >
       <div
         className={`${styles["list__item-col"]} ${styles["list__item-col--checkbox"]}`}
       >
@@ -68,15 +72,17 @@ export default function Lists({ taskItems, setTaskItems }) {
   const [showCompleted, setShowCompleted] = React.useState(false);
 
   const handleCheckbox = (id) => {
-    const newTasks = taskItems.map((task) => {
-      return {
-        id: task.id,
-        name: task.name,
-        deadline: task.deadline,
-        isCompleted: task.id === id ? !task.isCompleted : task.isCompleted,
-      };
-    });
-    setTaskItems(newTasks);
+    setTaskItems((prev) =>
+      prev.map((task) =>
+        task.id === id
+          ? { ...task, isCompleted: !task.isCompleted, isDeleting: true }
+          : task,
+      ),
+    );
+
+    setTimeout(() => {
+      setTaskItems((prev) => prev.filter((task) => task.id !== id));
+    }, 800);
   };
 
   const handleDeleteAction = (id) => {
