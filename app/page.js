@@ -1,8 +1,11 @@
 "use client";
+
 import React from "react";
+
 import Form from "./Form";
 import Header from "./Header";
 import Lists from "./Lists";
+
 import { AppDate } from "./lib";
 
 export default function Home() {

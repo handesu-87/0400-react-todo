@@ -1,4 +1,3 @@
-// date class
 export class AppDate {
   //deadline(string型) -> Int型(10進数) -> Dateオブジェクトに変換
   static parse(dateString) {

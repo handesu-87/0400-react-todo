@@ -1,7 +1,10 @@
 "use client";
+
 import { faCheck, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 import React from "react";
+
 import styles from "./Lists.module.sass";
 
 const List = (props) => {

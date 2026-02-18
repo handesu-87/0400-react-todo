@@ -1,4 +1,5 @@
 import React from "react";
+
 import styles from "./Form.module.sass";
 
 export default function Form(props) {
@@ -16,6 +17,17 @@ export default function Form(props) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    if (!taskName.trim()) {
+      window.alert("タスク名を入力してください。");
+      return;
+    }
+
+    if (!taskDeadline) {
+      window.alert("期限日を入力してください。");
+      return;
+    }
+
     props.onSubmit(taskName, taskDeadline);
     setTaskName("");
     setTaskDeadline("");
