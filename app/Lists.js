@@ -72,17 +72,24 @@ export default function Lists({ taskItems, setTaskItems }) {
   const [showCompleted, setShowCompleted] = React.useState(false);
 
   const handleCheckbox = (id) => {
-    setTaskItems((prev) =>
-      prev.map((task) =>
-        task.id === id
-          ? { ...task, isCompleted: !task.isCompleted, isDeleting: true }
-          : task,
-      ),
-    );
+    const newTasks = taskItems.map((task) => {
+      return {
+        id: task.id,
+        name: task.name,
+        deadline: task.deadline,
+        isCompleted: task.id === id ? !task.isCompleted : task.isCompleted,
+        isDeleting: task.id === id ? true : task.isDeleting,
+      };
+    });
+
+    setTaskItems(newTasks);
 
     setTimeout(() => {
-      setTaskItems((prev) => prev.filter((task) => task.id !== id));
-    }, 800);
+      const filteredTasks = newTasks.filter((task) => {
+        return task.id !== id;
+      });
+      setTaskItems(filteredTasks);
+    }, 300);
   };
 
   const handleDeleteAction = (id) => {
