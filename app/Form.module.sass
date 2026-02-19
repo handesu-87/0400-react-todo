@@ -1,52 +1,51 @@
 @charset "utf-8"
 
 .form
-    max-width: 986px;
+  max-width: 986px
+  padding: 8px 16px
+  margin: 64px auto 32px
+  border: 1px solid #f0f0f0
+  border-radius: 8px
+
+  &InputGroup
+    display: flex
+
+  &Input
+    flex: 1
     padding: 8px 16px
-    margin: 64px auto 32px
-    border: 1px solid #f0f0f0
+
+    &Name
+      flex: 4
+
+  &InputLabel
+    display: block
+    font-size: 12px
+    margin-bottom: 4px
+
+  &InputField
+    box-sizing: border-box
+    padding: 8px
     border-radius: 8px
+    border: 1px solid #f0f0f0
+    width: 100%
 
-    &__input
-        flex: 1
-        padding: 8px 16px
+    &::placeholder
+      color: #666
 
-        &-group
-            display: flex
-
-        &--name
-            flex: 4
-
-        &-label
-            display: block
-            font-size: 12px
-            margin-bottom: 4px
-
-        &-field
-            box-sizing: border-box
-            padding: 8px
-            border-radius: 8px
-            border: 1px solid #f0f0f0
-            width: 100%
-
-        &-field::placeholder
-            color: #666
-
-
-        &-footer
-            padding: 16px
-            display: flex
-            justify-content: flex-end
+  &InputFooter
+    padding: 16px
+    display: flex
+    justify-content: flex-end
 
 .button
-    border: 0
-    cursor: pointer
-    border-radius: 8px
-    background: #fff
-    padding: 8px 32px
-    font-size: 14px
-    letter-spacing: .1rem
+  border: 0
+  cursor: pointer
+  border-radius: 8px
+  background: #fff
+  padding: 8px 32px
+  font-size: 14px
+  letter-spacing: .1rem
 
-    &--primary
-        background: #7a72ff
-        color: #fefefe
+  &Primary
+    background: #7a72ff
+    color: #fefefe

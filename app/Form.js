@@ -36,37 +36,37 @@ export default function Form(props) {
 
   return (
     <form
-      className={`${styles.form} ${styles["js-form"]}`}
+      className={`${styles.form} ${styles.formJsForm}`}
       onSubmit={handleSubmit}
     >
-      <div className={styles["form__input-group"]}>
-        <div
-          className={`${styles["form__input"]} ${styles["form__input--name"]}`}
-        >
-          <label className={styles["form__input-label"]}>タスク</label>
+      <div className={styles.formInputGroup}>
+        <div className={`${styles.formInput} ${styles.formInputName}`}>
+          <label className={styles.formInputLabel}>タスク</label>
           <input
             name="name"
             type="text"
-            className={styles["form__input-field"]}
+            className={styles.formInputField}
             placeholder="タスク名を入力"
             value={taskName}
             onChange={handleTextInput}
             ref={inputRef}
           />
         </div>
-        <div className={styles["form__input"]}>
-          <label className={styles["form__input-label"]}>期限日</label>
+
+        <div className={styles.formInput}>
+          <label className={styles.formInputLabel}>期限日</label>
           <input
             name="deadline"
             type="date"
-            className={styles["form__input-field"]}
-            placeholder="期限日を入力"
+            className={styles.formInputField}
+            value={taskDeadline}
             onChange={handleDeadlineInput}
           />
         </div>
       </div>
-      <div className={styles["form__input-footer"]}>
-        <button className={`${styles.button} ${styles["button--primary"]}`}>
+
+      <div className={styles.formInputFooter}>
+        <button className={`${styles.button} ${styles.buttonPrimary}`}>
           追加
         </button>
       </div>

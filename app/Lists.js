@@ -2,66 +2,59 @@
 
 import { faCheck, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
 import React from "react";
-
 import styles from "./Lists.module.sass";
 
 const List = (props) => {
   const handleCheckbox = () => {
     props.onChecked(props.task.id);
   };
+
   const handleDelete = () => {
     props.onDelete(props.task.id);
   };
 
   return (
     <li
-      className={`${styles["list__item"]} ${
-        props.task.isDeleting ? styles["list__item--completed-dismissing"] : ""
+      className={`${styles.listItem} ${
+        props.task.isDeleting ? styles.listItemCompletedDismissing : ""
       }`}
     >
-      <div
-        className={`${styles["list__item-col"]} ${styles["list__item-col--checkbox"]}`}
-      >
+      <div className={`${styles.listItemCol} ${styles.listItemColCheckbox}`}>
         <label
-          className={`${styles["checkbox"]} ${
-            props.task.isCompleted ? styles["checkbox--checked"] : ""
+          className={`${styles.checkbox} ${
+            props.task.isCompleted ? styles.checkboxChecked : ""
           }`}
         >
           <input
             name="checkbox"
             type="checkbox"
-            className={styles["checkbox__input"]}
+            className={styles.checkboxInput}
             checked={props.task.isCompleted}
             onChange={handleCheckbox}
           />
           <FontAwesomeIcon
             icon={faCheck}
-            className={`${styles["icon"]} ${styles["icon--check"]}`}
+            className={`${styles.icon} ${styles.iconCheck}`}
           />
         </label>
       </div>
 
-      <div
-        className={`${styles["list__item-col"]} ${styles["list__item-col--name"]}`}
-      >
+      <div className={`${styles.listItemCol} ${styles.listItemColName}`}>
         {props.task.name}
       </div>
 
-      <div
-        className={`${styles["list__item-col"]} ${styles["list__item-col--deadline"]}`}
-      >
+      <div className={`${styles.listItemCol} ${styles.listItemColDeadline}`}>
         {props.task.deadline.toString()}
       </div>
 
       <div
-        className={`${styles["list__item-col"]} ${styles["list__item-col--actions"]}`}
+        className={`${styles.listItemCol} ${styles.listItemColActions}`}
         onClick={handleDelete}
       >
         <FontAwesomeIcon
           icon={faTrash}
-          className={`${styles["icon"]} ${styles["icon--trash"]}`}
+          className={`${styles.icon} ${styles.iconTrash}`}
         />
       </div>
     </li>
@@ -76,7 +69,6 @@ export default function Lists({ taskItems, setTaskItems }) {
   };
 
   const handleCheckbox = (id) => {
-    // ① フェード開始（isDeletingだけtrueにする）
     const newTasks = taskItems.map((task) => {
       return {
         id: task.id,
@@ -89,7 +81,6 @@ export default function Lists({ taskItems, setTaskItems }) {
 
     setTaskItems(newTasks);
 
-    // ② 0.8秒後に completed をトグルしてfilter()を実行
     setTimeout(() => {
       const updatedTasks = newTasks.map((task) => {
         return {
@@ -97,7 +88,7 @@ export default function Lists({ taskItems, setTaskItems }) {
           name: task.name,
           deadline: task.deadline,
           isCompleted: task.isCompleted,
-          isDeleting: false, //リセット
+          isDeleting: false,
         };
       });
 
@@ -110,18 +101,18 @@ export default function Lists({ taskItems, setTaskItems }) {
     if (!window.confirm(`タスク「${target?.name ?? ""}」を削除しますか？`)) {
       return;
     }
+
     const newTasks = taskItems.filter((task) => {
       return task.id !== id;
     });
+
     setTaskItems(newTasks);
   };
 
   const tasks = taskItems
     .filter((task) => {
       if (showCompleted) return true;
-
       if (task.isDeleting) return true;
-
       return !task.isCompleted;
     })
     .map((task) => (
@@ -134,13 +125,13 @@ export default function Lists({ taskItems, setTaskItems }) {
     ));
 
   return (
-    <div className={styles["list"]}>
-      <div className={styles["list__setting"]}>
-        <label className={styles["list__setting-label"]}>
+    <div className={styles.list}>
+      <div className={styles.listSetting}>
+        <label className={styles.listSettingLabel}>
           <input
-            name="show-completed"
+            name="showCompleted"
             type="checkbox"
-            className={`${styles["list__setting-input"]} ${styles["js-show-completed"]}`}
+            className={styles.listSettingInput}
             checked={showCompleted}
             onChange={handleShowCompleted}
           />
@@ -148,22 +139,20 @@ export default function Lists({ taskItems, setTaskItems }) {
         </label>
       </div>
 
-      <div className={styles["list__header"]}>
-        <div className={styles["list__header-item"]}>&nbsp;</div>
+      <div className={styles.listHeader}>
+        <div className={styles.listHeaderItem}>&nbsp;</div>
 
         <div
-          className={`${styles["list__header-item"]} ${styles["list__header-item--name"]}`}
+          className={`${styles.listHeaderItem} ${styles.listHeaderItemName}`}
         >
           タスク
         </div>
 
-        <div className={styles["list__header-item"]}>期限日</div>
-        <div className={styles["list__header-item"]}>&nbsp;</div>
+        <div className={styles.listHeaderItem}>期限日</div>
+        <div className={styles.listHeaderItem}>&nbsp;</div>
       </div>
 
-      <ul className={`${styles["list__items"]} ${styles["js-list-container"]}`}>
-        {tasks}
-      </ul>
+      <ul className={styles.listItems}>{tasks}</ul>
     </div>
   );
 }

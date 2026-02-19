@@ -1,108 +1,115 @@
 @charset "utf-8"
 
 .list
-    max-width: 986px
-    margin: 0 auto
-    padding: 32px
+  max-width: 986px
+  margin: 0 auto
+  padding: 32px
 
-    &__setting
-        padding: 16px
-        margin-bottom: 32px
-        display: flex
-        justify-content: flex-end
-
-    &__header
-        display: flex
-        align-items: center
-        border-bottom: 1px solid #f0f0f0
-        font-size: 12px
-
-        &-item
-            flex: 1
-            padding: 8px 16px
-            border-right: 1px solid #f0f0f0
-            font-size: 12px
-
-            &--name
-                flex: 4
-
-    &__item
-        display: flex
-        align-items: center
-        width: 100%
-        border-bottom: 1px solid #f0f0f0
-        transition: opacity .8s
-
-        &--completed-dismissing
-            opacity: 0
-
-        &-col
-            box-sizing: border-box
-            flex: 1
-            padding: 16px
-            border-right: 1px solid #f0f0f0
-
-            &--checkbox
-                display: flex
-                justify-content: center
-
-            &--name
-                cursor: pointer
-                flex: 4
-
-                &-edit
-                    width: 100%
-                    padding-top: 3.25px
-                    padding-bottom: 3.25px
-                    cursor: default
-                    flex: 4
-                    font-size: 1rem
-
-            &--deadline
-                cursor: pointer
-
-                &-edit
-                    color: #666
-                    width: 100%
-                    padding: 3.25px 0 3,25px 0
-                    font-size: 0.875rem
-
-            &--actions
-                font-size: 12px
-                display: flex
-                justify-content: center
-
-.checkbox
-    cursor: pointer
-    position: relative
-    display: block
-    border-radius: 50%
-    border: 1px solid #c6c6c6
-    padding: 4px
-    height: 26px
-    width: 26px
-    color: #fefefe
+  &Setting
+    padding: 16px
+    margin-bottom: 32px
     display: flex
-    justify-content: center
+    justify-content: flex-end
+
+    &Label
+
+    &Input
+
+  &Header
+    display: flex
     align-items: center
+    border-bottom: 1px solid #f0f0f0
+    font-size: 12px
 
-    &--checked
-        background: #7a72ff
+    &Item
+      flex: 1
+      padding: 8px 16px
+      border-right: 1px solid #f0f0f0
+      font-size: 12px
 
-    &__input
-        pointer-events: none
-        position: absolute
-        inset: 0
-        width: 100%
-        height: 100%
-        margin: 0
-        opacity: 0
+      &Name
+        flex: 4
+
+  &Items
+
+  &Item
+    display: flex
+    align-items: center
+    width: 100%
+    border-bottom: 1px solid #f0f0f0
+    transition: opacity .8s
+
+    &CompletedDismissing
+      opacity: 0
+
+    &Col
+      box-sizing: border-box
+      flex: 1
+      padding: 16px
+      border-right: 1px solid #f0f0f0
+
+      &Checkbox
+        display: flex
+        justify-content: center
+
+      &Name
+        cursor: pointer
+        flex: 4
+
+        &Edit
+          width: 100%
+          padding-top: 3.25px
+          padding-bottom: 3.25px
+          cursor: default
+          flex: 4
+          font-size: 1rem
+
+      &Deadline
         cursor: pointer
 
-.icon
-    color: #666
-    cursor: pointer
-    pointer-events: none
+        &Edit
+          color: #666
+          width: 100%
+          padding: 3.25px 0 3.25px 0
+          font-size: 0.875rem
 
-    &--check
-        color: #fefefe
+      &Actions
+        font-size: 12px
+        display: flex
+        justify-content: center
+
+.checkbox
+  cursor: pointer
+  position: relative
+  display: flex
+  justify-content: center
+  align-items: center
+  border-radius: 50%
+  border: 1px solid #c6c6c6
+  padding: 4px
+  height: 26px
+  width: 26px
+  color: #fefefe
+
+  &Checked
+    background: #7a72ff
+
+  &Input
+    pointer-events: none
+    position: absolute
+    inset: 0
+    width: 100%
+    height: 100%
+    margin: 0
+    opacity: 0
+    cursor: pointer
+
+.icon
+  color: #666
+  cursor: pointer
+  pointer-events: none
+
+  &Check
+    color: #fefefe
+
+  &Trash
