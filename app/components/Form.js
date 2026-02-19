@@ -1,6 +1,6 @@
 import React from "react";
 
-import styles from "./Form.module.sass";
+import styles from "../styles/components/Form.module.sass";
 
 export default function Form(props) {
   const [taskName, setTaskName] = React.useState("");

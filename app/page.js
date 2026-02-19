@@ -2,9 +2,9 @@
 
 import React from "react";
 
-import Form from "./Form";
-import Header from "./Header";
-import Lists from "./Lists";
+import Form from "./components/Form";
+import Header from "./components/Header";
+import Lists from "./components/Lists";
 
 import { AppDate } from "./lib";
 

@@ -1,4 +1,4 @@
-import styles from "./Header.module.sass";
+import styles from "../styles/components/Header.module.sass";
 
 export default function Header() {
   return (
