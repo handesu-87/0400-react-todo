@@ -8,18 +8,15 @@ import React from "react";
 import styles from "../styles/components/Lists.module.sass";
 
 const List = (props) => {
-  const handleCheckbox = () => {
-    props.onChecked(props.task.id);
-  };
+  const { task, isDeleting, onChecked, onDelete } = props;
 
-  const handleDelete = () => {
-    props.onDelete(props.task.id);
-  };
+  const handleCheckbox = () => onChecked(task.id);
+  const handleDelete = () => onDelete(task.id);
 
   return (
     <li
       className={`${styles.listItem} ${
-        props.task.isDeleting ? styles.listItemCompletedDismissing : ""
+        isDeleting ? styles.listItemCompletedDismissing : ""
       }`}
     >
       <div className={`${styles.listItemCol} ${styles.listItemColCheckbox}`}>
@@ -64,37 +61,36 @@ const List = (props) => {
 };
 
 export default function Lists({ taskItems, setTaskItems }) {
+  console.log(taskItems);
   const [showCompleted, setShowCompleted] = React.useState(false);
+  const [deletingTaskIds, setDeletingTaskIds] = React.useState([]);
 
   const handleShowCompleted = (e) => {
     setShowCompleted(e.target.checked);
   };
 
   const handleCheckbox = (id) => {
-    const newTasks = taskItems.map((task) => {
-      return {
-        id: task.id,
-        name: task.name,
-        deadline: task.deadline,
-        isCompleted: task.id === id ? !task.isCompleted : task.isCompleted,
-        isDeleting: task.id === id ? true : task.isDeleting,
-      };
-    });
+    const target = taskItems.find((t) => t.id === id);
+    if (!target) return;
 
-    setTaskItems(newTasks);
+    const becameCompleted = !target.isCompleted; // ← 先に確定
 
+    setTaskItems((prev) =>
+      prev.map((t) =>
+        t.id === id ? { ...t, isCompleted: !t.isCompleted } : t,
+      ),
+    );
+
+    // チェック外しなら deleting を止めて終わり
+    if (!becameCompleted) {
+      setDeletingTaskIds((prev) => prev.filter((taskId) => taskId !== id));
+      return;
+    }
+
+    // チェック付け（完了）ならフェードアウト開始
+    setDeletingTaskIds((prev) => (prev.includes(id) ? prev : [...prev, id]));
     setTimeout(() => {
-      const updatedTasks = newTasks.map((task) => {
-        return {
-          id: task.id,
-          name: task.name,
-          deadline: task.deadline,
-          isCompleted: task.isCompleted,
-          isDeleting: false,
-        };
-      });
-
-      setTaskItems(updatedTasks);
+      setDeletingTaskIds((prev) => prev.filter((taskId) => taskId !== id));
     }, 800);
   };
 
@@ -112,15 +108,19 @@ export default function Lists({ taskItems, setTaskItems }) {
   };
 
   const tasks = taskItems
-    .filter((task) => {
-      if (showCompleted) return true;
-      if (task.isDeleting) return true;
-      return !task.isCompleted;
-    })
+    .filter(
+      (task) =>
+        showCompleted || // 完了タスク表示ON → 全部表示
+        deletingTaskIds.includes(task.id) || // 削除アニメーション中 → 表示
+        !task.isCompleted, // それ以外 → 未完了だけ表示
+    )
+    .slice() // ← sortの破壊的変更を避けるためコピー
+    .sort((a, b) => a.deadline.getTime() - b.deadline.getTime())
     .map((task) => (
       <List
         key={task.id}
         task={task}
+        isDeleting={deletingTaskIds.includes(task.id)}
         onChecked={handleCheckbox}
         onDelete={handleDeleteAction}
       />

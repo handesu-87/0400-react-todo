@@ -4,6 +4,14 @@
 
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+## タスク
+
+<!-- - ソート機能の実装 -->
+
+- タスク名の編集できるようにする
+- 締切の編集できるようにする
+- 完了▶︎未完了に戻す時はアニメーションさせないようにする
+
 ## Getting Started
 
 First, run the development server:
