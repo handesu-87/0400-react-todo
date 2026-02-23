@@ -10,9 +10,9 @@ import { AppDate } from "../lib";
 import styles from "../styles/components/Lists.module.sass";
 
 const List = (props) => {
-  console.log(props);
+  // console.log(props);
   const task = props.task;
-  console.log(task.deadline.toString());
+  // console.log(task.deadline.toString());
 
   const [isEditing, setIsEditing] = React.useState(false); //編集モードかどうか
   const [draftName, setDraftName] = React.useState(task.name); //入力中のテキストの状態
@@ -20,28 +20,31 @@ const List = (props) => {
   const [isEditingDeadline, setIsEditingDeadline] = React.useState(false); //編集モードかどうか
   const [draftDeadline, setDraftDeadline] = React.useState(
     task.deadline.toString(),
-  ); //入力中のテキストの状態 - YYYY-MM-ddの文字列
+  ); //入力中のテキストの状態 : YYYY-MM-ddの文字列
 
   const handleCheckbox = () => props.onChecked(task.id);
   const handleDelete = () => props.onDelete(task.id);
 
-  const inputRef = React.useRef(null);
-
   const saveTaskName = () => {
-    const trimmed = draftName.trim();
-    if (trimmed && trimmed !== task.name) {
-      props.onRename(task.id, trimmed);
+    if (!draftName.trim()) {
+      window.alert("タスク名を入力してください。");
+      return;
     }
+    props.onRename(task.id, draftName.trim());
     setIsEditing(false);
   };
 
   const saveDeadline = () => {
-    const value = draftDeadline;
-    props.onDeadlineChange(task.id, value);
+    if (!draftDeadline) {
+      window.alert("期限日を入力してください。");
+      return;
+    }
+    props.onDeadlineChange(task.id, draftDeadline);
     setIsEditingDeadline(false);
   };
 
   // 締切が編集モードになった直後にカレンダーUIを開く
+  const inputRef = React.useRef(null);
   React.useEffect(() => {
     if (!isEditingDeadline) return;
     const el = inputRef.current;
@@ -53,8 +56,14 @@ const List = (props) => {
     }
   }, [isEditingDeadline]);
 
+  //チェック後のアニメーション
+  const ref = React.useRef(null);
+  React.useEffect(() => {
+    //todo
+  });
+
   return (
-    <li className={`${styles.listItem}`}>
+    <li ref={ref} className={`${styles.listItem}`}>
       <div className={`${styles.listItemCol} ${styles.listItemColCheckbox}`}>
         <label
           className={`${styles.checkbox} ${
@@ -65,8 +74,27 @@ const List = (props) => {
             name="checkbox"
             type="checkbox"
             className={styles.checkboxInput}
-            checked={props.task.isCompleted}
-            onChange={handleCheckbox}
+            checked={task.isCompleted}
+            onChange={() => {
+              //もし、「完了タスクを表示」のときは、未完了▶︎完了のアニメーションをしない
+              if (props.showCompleted) {
+                handleCheckbox();
+                return;
+              }
+
+              // 完了▶︎未完了のアニメーションもしない
+              if (task.isCompleted) {
+                handleCheckbox(); // true→false に戻す
+                return;
+              }
+
+              const labelEl = ref.current.querySelector("label");
+              labelEl.classList.add(styles.checkboxChecked);
+              ref.current.classList.add(styles.listItemCompletedDismissing);
+              setTimeout(() => {
+                handleCheckbox();
+              }, 800);
+            }}
           />
           <FontAwesomeIcon
             icon={faCheck}
@@ -95,7 +123,10 @@ const List = (props) => {
             ref={inputRef}
             type="date"
             value={draftDeadline}
-            onChange={(e) => setDraftDeadline(e.target.value)}
+            onChange={(e) => {
+              console.log(e.target.value);
+              setDraftDeadline(e.target.value);
+            }}
             onBlur={saveDeadline}
             autoFocus
             className={styles.deadlineInput}
@@ -124,50 +155,47 @@ const List = (props) => {
 };
 
 export default function Lists({ taskItems, setTaskItems }) {
-  // console.log(taskItems);
-
   const [showCompleted, setShowCompleted] = React.useState(false);
 
   const handleShowCompleted = (e) => {
     setShowCompleted(e.target.checked);
   };
 
+  // task.isCompletedをトグルする関数
   const handleCheckbox = (id) => {
-    const target = taskItems.find((t) => t.id === id);
-    if (!target) return;
-
     setTaskItems((prev) =>
-      prev.map((t) =>
-        t.id === id ? { ...t, isCompleted: !t.isCompleted } : t,
+      prev.map((task) =>
+        task.id === id ? { ...task, isCompleted: !task.isCompleted } : task,
       ),
     );
   };
 
+  // task.nameを更新する関数
   const handleRename = (id, newName) => {
     setTaskItems((prev) =>
       prev.map((task) => (task.id === id ? { ...task, name: newName } : task)),
     );
   };
 
-  const handleDeadlineChange = (id, deadlineString) => {
-    const nextDeadline = AppDate.parse(deadlineString);
+  // task.deadlineを更新する関数
+  const handleDeadlineChange = (id, newDeadlineString) => {
     setTaskItems((prev) =>
       prev.map((task) =>
-        task.id === id ? { ...task, deadline: nextDeadline } : task,
+        task.id === id
+          ? { ...task, deadline: AppDate.parse(newDeadlineString) }
+          : task,
       ),
     );
   };
 
   const handleDeleteAction = (id) => {
     const target = taskItems.find((task) => task.id === id);
-    if (!window.confirm(`タスク「${target?.name ?? ""}」を削除しますか？`)) {
+    if (!window.confirm(`タスク「${target?.name}」を削除しますか？`)) {
       return;
     }
-
     const newTasks = taskItems.filter((task) => {
       return task.id !== id;
     });
-
     setTaskItems(newTasks);
   };
 
@@ -175,13 +203,13 @@ export default function Lists({ taskItems, setTaskItems }) {
     .filter(
       (task) =>
         showCompleted || // 完了タスク表示ON → 全部表示
-        // deletingTaskIds.includes(task.id) || // 削除アニメーション中 → 表示
         !task.isCompleted, // それ以外 → 未完了だけ表示
     )
-    .slice() // ← sortの破壊的変更を避けるためコピー
+    .slice() // ← シャローコピー
     .sort((a, b) => a.deadline.getTime() - b.deadline.getTime())
     .map((task) => (
       <List
+        showCompleted={showCompleted}
         key={task.id}
         task={task}
         onChecked={handleCheckbox}

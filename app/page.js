@@ -34,7 +34,6 @@ export default function Home() {
     const newTasks = [...taskItems];
     const maxId =
       newTasks.length > 0 ? Math.max(...newTasks.map((task) => task.id)) : -1;
-
     newTasks.push({
       id: maxId + 1,
       name: name,

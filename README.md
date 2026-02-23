@@ -3,8 +3,11 @@
 - [x] ソート機能の実装
 - [x] タスク名の編集できるようにする
 - [x] 締切の編集できるようにする
-- [ ] useRefを使ってチェックのアニメーションをつける
-- [ ] 完了▶︎未完了に戻す時はアニメーションさせないようにする
+- [x] useRefを使ってチェックのアニメーションをつける
+- [x] 完了▶︎未完了に戻す時はアニメーションさせないようにする
+- [x] 編集後、タスク名が空の時はアラートを出す
+- [x] 編集後、締切が空の時はアラートを出す
+- [ ] タスク操作（完了状態、追加、削除、編集）親コンポーネントに移動
 
 ## コンポーネント階層
 
@@ -33,6 +36,10 @@
   - 関数-`handleSubmit()`->タスク名、締切のバリデーション、フォーム送信後にリセット、`props`で渡ってきた`handleFormSubmit()`にタスク名と締切を渡す
 
 - Lists...タスクリストの表示
+  - useState-`showCompleted`
+  - 関数-`handleShowCompleted()`->`showCompleted`の更新
+  - 関数-``
+
 - List...タスクが編集状態かどうかの管理・編集後の値の管理
   - useState-`isEditing`
   - useState-`draftName`
@@ -40,8 +47,10 @@
   - useState-`draftDeadline`
   - 関数-`handleCheckbox()`->Listsの`onChecked()`にタスクのidを渡す
   - 関数-`handleDelete()`->Listsの`onDelete()`にタスクのidを渡す
-  - 関数-`saveTaskName()`->Listsの`onRename()`にトリムされたタスク名を渡す・`isEditing`をfalseにする
-  - 関数-`saveDeadline()`->Listsの`onRename()`にトリムされたタスク名を渡す・`isEditing`をfalseにする
+  - 関数-`saveTaskName()`->Listsの`onRename()`に編集後のタスク名を渡す・`isEditing`をfalseにする
+  - 関数-`saveDeadline()`->Listsの`onDeadlineChange()`に編集後の締切の値を渡す・`setIsEditingDeadline`をfalseにする
+  - useRef-カレンダーUIの`input`要素を取得
+  - useEffect-カレンダーUIが即座に表示されるようにする
 
 ## React Hooks
 
