@@ -6,32 +6,31 @@ export default function Form(props) {
   const [taskName, setTaskName] = React.useState("");
   const [taskDeadline, setTaskDeadline] = React.useState("");
   const inputRef = React.useRef(null);
-  // console.log(inputRef);
 
   const handleTextInput = (e) => {
     setTaskName(e.currentTarget.value);
   };
+
   const handleDeadlineInput = (e) => {
     setTaskDeadline(e.currentTarget.value);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
     if (!taskName.trim()) {
       window.alert("タスク名を入力してください。");
       return;
     }
-
     if (!taskDeadline) {
       window.alert("期限日を入力してください。");
       return;
     }
-
+    console.log(props.onSubmit);
     props.onSubmit(taskName, taskDeadline);
     setTaskName("");
     setTaskDeadline("");
     inputRef.current.focus();
+    // console.log(inputRef);
   };
 
   return (

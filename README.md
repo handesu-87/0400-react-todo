@@ -1,16 +1,59 @@
+## タスク
+
+- [x] ソート機能の実装
+- [x] タスク名の編集できるようにする
+- [x] 締切の編集できるようにする
+- [ ] useRefを使ってチェックのアニメーションをつける
+- [ ] 完了▶︎未完了に戻す時はアニメーションさせないようにする
+
+## コンポーネント階層
+
+- page.js
+  - <Header />
+  - <Form onSubmit={handleFormSubmit} />
+  - <Lists taskItems={taskItems} setTaskItems={setTaskItems} />
+    - <List />
+
+## 各コンポーネントの役割
+
+- pages.js...tasks配列の管理・更新
+  - useState-`taskItems`
+  - 関数-`handleFormSubmit()`->フォーム送信したら、`taskItems`を追加して更新
+  - props-Form.jsに`handleFormSubmit()`を渡す
+  - props-Lists.jsに`taskItems`と`setTaskItems()`を渡す
+
+- Header...ヘッダーの表示
+
+- Form...フォームの入力状態管理・バリデーション・page.jsにタスク名と締切を渡す
+  - useState-`taskName`
+  - useState-`taskDeadline`
+  - useRef-`input`（タスク名入力フォーム）にフォーカスを当てる
+  - 関数-`handleTextInput()`->フォームに入力されたタスク名を`taskName`にセット
+  - 関数-`handleDeadlineInput()`->フォームに入力された締切を`taskDeadline`にセット
+  - 関数-`handleSubmit()`->タスク名、締切のバリデーション、フォーム送信後にリセット、`props`で渡ってきた`handleFormSubmit()`にタスク名と締切を渡す
+
+- Lists...タスクリストの表示
+- List...タスクが編集状態かどうかの管理・編集後の値の管理
+  - useState-`isEditing`
+  - useState-`draftName`
+  - useState-`isEditingDeadline`
+  - useState-`draftDeadline`
+  - 関数-`handleCheckbox()`->Listsの`onChecked()`にタスクのidを渡す
+  - 関数-`handleDelete()`->Listsの`onDelete()`にタスクのidを渡す
+  - 関数-`saveTaskName()`->Listsの`onRename()`にトリムされたタスク名を渡す・`isEditing`をfalseにする
+  - 関数-`saveDeadline()`->Listsの`onRename()`にトリムされたタスク名を渡す・`isEditing`をfalseにする
+
+## React Hooks
+
+- `useEffect()`は、コールバック関数。毎レンダリングの直後に実行される。第二引数がある場合は、そのタイミングで実行される。第二引数が空の配列の場合は最初の一回しか実行されない。
+
+- `useRef`は、DOM要素を参照するための特殊なオブジェクト。`.current` とすると、DOM要素の命令を使えるようになる。タグにref属性をつけて紐づける。また、無駄なレンダリングを防ぐことができる。
+
 ## Prettier を実行する
 
 `npx prettier . --write`
 
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
-
-## タスク
-
-<!-- - ソート機能の実装 -->
-
-- タスク名の編集できるようにする
-- 締切の編集できるようにする
-- 完了▶︎未完了に戻す時はアニメーションさせないようにする
 
 ## Getting Started
 
