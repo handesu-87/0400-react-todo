@@ -11,11 +11,12 @@
 
 ## コンポーネント階層
 
-- page.js
+```page.js
   - <Header />
   - <Form onSubmit={handleFormSubmit} />
   - <Lists taskItems={taskItems} setTaskItems={setTaskItems} />
     - <List />
+```
 
 ## 各コンポーネントの役割
 
@@ -35,12 +36,16 @@
   - 関数-`handleDeadlineInput()`->フォームに入力された締切を`taskDeadline`にセット
   - 関数-`handleSubmit()`->タスク名、締切のバリデーション、フォーム送信後にリセット、`props`で渡ってきた`handleFormSubmit()`にタスク名と締切を渡す
 
-- Lists...タスクリストの表示
+- Lists...各タスクの完了更新・削除▶︎表示
   - useState-`showCompleted`
   - 関数-`handleShowCompleted()`->`showCompleted`の更新
-  - 関数-``
+  - 関数-`handleCheckbox()`->`task.isCompleted`をトグルする
+  - 関数-`handleRename()`->`task.name`を更新する
+  - 関数-`handleDeadlineChange()`->`task.deadline`を更新する
+  - 関数-`handleDeleteAction()`->受け取ったidと一致するタスクを削除
+  - `tasks`-各タスクをソートして表示
 
-- List...タスクが編集状態かどうかの管理・編集後の値の管理
+- List...タスクが編集状態かどうかの管理・編集後の値をListsに渡す
   - useState-`isEditing`
   - useState-`draftName`
   - useState-`isEditingDeadline`

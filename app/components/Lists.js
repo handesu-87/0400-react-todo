@@ -5,14 +5,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import React from "react";
 
-import { AppDate } from "../lib";
-
 import styles from "../styles/components/Lists.module.sass";
 
 const List = (props) => {
-  // console.log(props);
+  console.log(props);
   const task = props.task;
-  // console.log(task.deadline.toString());
 
   const [isEditing, setIsEditing] = React.useState(false); //編集モードかどうか
   const [draftName, setDraftName] = React.useState(task.name); //入力中のテキストの状態
@@ -56,11 +53,7 @@ const List = (props) => {
     }
   }, [isEditingDeadline]);
 
-  //チェック後のアニメーション
   const ref = React.useRef(null);
-  React.useEffect(() => {
-    //todo
-  });
 
   return (
     <li ref={ref} className={`${styles.listItem}`}>
@@ -154,49 +147,17 @@ const List = (props) => {
   );
 };
 
-export default function Lists({ taskItems, setTaskItems }) {
+export default function Lists({
+  taskItems,
+  onChecked,
+  onDelete,
+  onRename,
+  onDeadlineChange,
+}) {
   const [showCompleted, setShowCompleted] = React.useState(false);
 
   const handleShowCompleted = (e) => {
     setShowCompleted(e.target.checked);
-  };
-
-  // task.isCompletedをトグルする関数
-  const handleCheckbox = (id) => {
-    setTaskItems((prev) =>
-      prev.map((task) =>
-        task.id === id ? { ...task, isCompleted: !task.isCompleted } : task,
-      ),
-    );
-  };
-
-  // task.nameを更新する関数
-  const handleRename = (id, newName) => {
-    setTaskItems((prev) =>
-      prev.map((task) => (task.id === id ? { ...task, name: newName } : task)),
-    );
-  };
-
-  // task.deadlineを更新する関数
-  const handleDeadlineChange = (id, newDeadlineString) => {
-    setTaskItems((prev) =>
-      prev.map((task) =>
-        task.id === id
-          ? { ...task, deadline: AppDate.parse(newDeadlineString) }
-          : task,
-      ),
-    );
-  };
-
-  const handleDeleteAction = (id) => {
-    const target = taskItems.find((task) => task.id === id);
-    if (!window.confirm(`タスク「${target?.name}」を削除しますか？`)) {
-      return;
-    }
-    const newTasks = taskItems.filter((task) => {
-      return task.id !== id;
-    });
-    setTaskItems(newTasks);
   };
 
   const tasks = taskItems
@@ -209,13 +170,13 @@ export default function Lists({ taskItems, setTaskItems }) {
     .sort((a, b) => a.deadline.getTime() - b.deadline.getTime())
     .map((task) => (
       <List
-        showCompleted={showCompleted}
         key={task.id}
         task={task}
-        onChecked={handleCheckbox}
-        onDelete={handleDeleteAction}
-        onRename={handleRename}
-        onDeadlineChange={handleDeadlineChange}
+        showCompleted={showCompleted}
+        onChecked={onChecked}
+        onDelete={onDelete}
+        onRename={onRename}
+        onDeadlineChange={onDeadlineChange}
       />
     ));
 
