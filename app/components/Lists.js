@@ -25,6 +25,7 @@ const List = (props) => {
   const saveTaskName = () => {
     if (!draftName.trim()) {
       window.alert("タスク名を入力してください。");
+      setIsEditing(false);
       return;
     }
     props.onRename(task.id, draftName.trim());
@@ -34,6 +35,7 @@ const List = (props) => {
   const saveDeadline = () => {
     if (!draftDeadline) {
       window.alert("期限日を入力してください。");
+      setIsEditingDeadline(false);
       return;
     }
     props.onDeadlineChange(task.id, draftDeadline);
