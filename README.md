@@ -7,20 +7,27 @@
 - [x] 完了▶︎未完了に戻す時はアニメーションさせないようにする
 - [x] 編集後、タスク名が空の時はアラートを出す
 - [x] 編集後、締切が空の時はアラートを出す
-- [ ] タスク操作（完了状態、追加、削除、編集）親コンポーネントに移動
+- [x] タスク操作（完了状態、追加、削除、編集）親コンポーネントに移動
 
 ## コンポーネント階層
 
 ```page.js
-  - <Header />
-  - <Form onSubmit={handleFormSubmit} />
-  - <Lists taskItems={taskItems} setTaskItems={setTaskItems} />
-    - <List />
+  <>
+    <Header />
+    <Form onSubmit={handleAddTask} />
+    <Lists
+      taskItems={taskItems}
+      onChecked={handleToggleCompleted}
+      onRename={handleRename}
+      onDeadlineChange={handleDeadlineChange}
+      onDelete={handleDelete}
+    />
+  </>
 ```
 
 ## 各コンポーネントの役割
 
-- pages.js...tasks配列の管理・更新
+- pages.js...tasksの追加・完了トグル・削除・編集
   - useState-`taskItems`
   - 関数-`handleFormSubmit()`->フォーム送信したら、`taskItems`を追加して更新
   - props-Form.jsに`handleFormSubmit()`を渡す
@@ -36,7 +43,7 @@
   - 関数-`handleDeadlineInput()`->フォームに入力された締切を`taskDeadline`にセット
   - 関数-`handleSubmit()`->タスク名、締切のバリデーション、フォーム送信後にリセット、`props`で渡ってきた`handleFormSubmit()`にタスク名と締切を渡す
 
-- Lists...各タスクの完了更新・削除▶︎表示
+- Lists...各タスクをソート・表示
   - useState-`showCompleted`
   - 関数-`handleShowCompleted()`->`showCompleted`の更新
   - 関数-`handleCheckbox()`->`task.isCompleted`をトグルする
@@ -45,7 +52,7 @@
   - 関数-`handleDeleteAction()`->受け取ったidと一致するタスクを削除
   - `tasks`-各タスクをソートして表示
 
-- List...タスクが編集状態かどうかの管理・編集後の値をListsに渡す
+- List...タスクが編集状態かどうかの管理・バリデーション・編集後の値をListsに渡す
   - useState-`isEditing`
   - useState-`draftName`
   - useState-`isEditingDeadline`
