@@ -33,7 +33,8 @@ export default function Lists({
 
 ## Next.jsにGoogleFontsをインポートして使う
 
-参考: https://qiita.com/miita_612/items/c3d73bb18a07e55bd7ee#%E5%AE%9F%E9%9A%9B%E3%81%AE%E3%83%95%E3%82%A9%E3%83%B3%E3%83%88%E8%A8%AD%E5%AE%9A%E6%96%B9%E6%B3%95
+- 参考1: https://nextjs.org/docs/pages/api-reference/components/font
+- 参考2: https://qiita.com/miita_612/items/c3d73bb18a07e55bd7ee#%E5%AE%9F%E9%9A%9B%E3%81%AE%E3%83%95%E3%82%A9%E3%83%B3%E3%83%88%E8%A8%AD%E5%AE%9A%E6%96%B9%E6%B3%95
 
 ## タスク
 
