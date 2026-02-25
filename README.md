@@ -1,17 +1,27 @@
+## key属性とprops
+
+子コンポーネントにこんな感じでpropsを渡したとき、keyは属性として識別される。その他はpropsとして識別される。
+
+```
+<ListItem
+  key={task.id}
+  task={task}
+  showCompleted={showCompleted}
+  onChecked={onChecked}
+  onDelete={onDelete}
+  onRename={onRename}
+  onDeadlineChange={onDeadlineChange}
+/>
+```
+
+![key](./memo-scr/スクリーンショット%202026-02-25%2012.11.17.png)
+![props](./memo-scr/スクリーンショット%202026-02-25%2012.11.22.png)
+
 ## 分割代入について
 
-```ListItem
-const ListItem = ({
-  task,
-  showCompleted,
-  onChecked,
-  onDelete,
-  onRename,
-  onDeadlineChange,
-}) => { //... }
-```
+propsを渡すときは、分割代入を使うとわかりやすい。
 
-```
+```sample
 export default function Lists({
   taskItems,
   onChecked,

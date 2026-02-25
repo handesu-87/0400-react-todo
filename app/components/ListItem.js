@@ -112,7 +112,7 @@ export default function ListItem({
       <div className={`${styles.listItemCol} ${styles.listItemColName}`}>
         {isEditing ? ( //編集中ならinput, そうでないならdiv
           <input
-            className={styles.nameInput}
+            className={styles.listItemColNameEdit}
             value={draftName}
             onChange={(e) => setDraftName(e.target.value)}
             onBlur={saveTaskName}
@@ -135,7 +135,7 @@ export default function ListItem({
             }}
             onBlur={saveDeadline}
             autoFocus
-            className={styles.deadlineInput}
+            className={styles.listItemColDeadlineEdit}
           />
         ) : (
           <div
