@@ -1,10 +1,10 @@
 "use client";
 
 import React from "react";
-import styles from "../styles/components/Lists.module.sass";
+import styles from "../styles/components/List.module.sass";
 import ListItem from "./ListItem";
 
-export default function Lists({
+export default function List({
   taskItems,
   onChecked,
   onDelete,

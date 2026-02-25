@@ -4,7 +4,7 @@ import React from "react";
 
 import Form from "./components/Form";
 import Header from "./components/Header";
-import Lists from "./components/Lists";
+import List from "./components/List";
 
 import { AppDate } from "./lib";
 
@@ -87,7 +87,7 @@ export default function Home() {
     <>
       <Header />
       <Form onSubmit={handleAddTask} />
-      <Lists
+      <List
         taskItems={taskItems}
         onChecked={handleToggleCompleted}
         onRename={handleRename}

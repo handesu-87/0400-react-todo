@@ -3,7 +3,7 @@
 import { faCheck, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
-import styles from "../styles/components/Lists.module.sass";
+import styles from "../styles/components/List.module.sass";
 
 export default function ListItem({
   task,
