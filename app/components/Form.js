@@ -2,7 +2,7 @@ import React from "react";
 
 import styles from "../styles/components/Form.module.sass";
 
-export default function Form(props) {
+export default function Form({ onSubmit }) {
   const [taskName, setTaskName] = React.useState("");
   const [taskDeadline, setTaskDeadline] = React.useState("");
   const inputRef = React.useRef(null);
@@ -25,8 +25,8 @@ export default function Form(props) {
       window.alert("期限日を入力してください。");
       return;
     }
-    console.log(props.onSubmit);
-    props.onSubmit(taskName, taskDeadline);
+    console.log(onSubmit);
+    onSubmit(taskName, taskDeadline);
     setTaskName("");
     setTaskDeadline("");
     inputRef.current.focus();

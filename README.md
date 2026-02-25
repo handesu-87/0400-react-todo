@@ -1,3 +1,26 @@
+## 分割代入について
+
+```ListItem
+const ListItem = ({
+  task,
+  showCompleted,
+  onChecked,
+  onDelete,
+  onRename,
+  onDeadlineChange,
+}) => { //... }
+```
+
+```
+export default function Lists({
+  taskItems,
+  onChecked,
+  onDelete,
+  onRename,
+  onDeadlineChange,
+}) { //... }
+```
+
 ## タスク
 
 - [x] ソート機能の実装
